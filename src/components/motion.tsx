@@ -138,16 +138,21 @@ export function LineReveal({
 
   return (
     <Tag ref={ref} className={[styles.lines, className].filter(Boolean).join(" ")}>
-      <span className={`visually-hidden ${styles.plain}`}>{parts.map((part) => part.text).join("")}</span>
+      <span className={`visually-hidden ${styles.plain}`}>
+        {parts.map((part) => part.text.replace(/\s+/g, " ")).join("")}
+      </span>
       <span aria-hidden="true">
         {parts.map((part, p) => {
           const cls = [part.tone && toneClass?.[part.tone], part.bold && boldClass].filter(Boolean).join(" ");
           return (
             <span key={p} className={cls || undefined}>
               {part.text.split(/(\s+)/).map((word, w) =>
-                // spaces stay ordinary text, so lines still wrap between words
+                // spaces stay ordinary text, so lines still wrap between words;
+                // a line break written into the text ("\n") becomes a set break on wider screens
                 word.trim() === ""
-                  ? word
+                  ? word.includes("\n")
+                    ? [<br key={`${w}-br`} className={styles.setBreak} />, " "]
+                    : word
                   : splitAfterDashes(word).map((piece, i) => (
                       <span key={`${w}-${i}`} className={styles.word}>
                         {splitCharacters(piece).map((char, c) => (

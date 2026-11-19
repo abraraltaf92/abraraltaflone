@@ -48,6 +48,17 @@ export const hero = {
   primaryCta: { label: "Get In Touch", href: "mailto:abraraltaf92@gmail.com" },
 };
 
+/** The "page not found" screen, shown for any address that does not exist. */
+export const notFound = {
+  title: "Page not found",
+  // "\n" marks where the heading breaks onto a new line on tablet and desktop.
+  heading: [
+    { text: "Oops!! Looks Like\nThis Page ", tone: "ink" },
+    { text: "Doesn't Exist\nOr Has Been Moved.", tone: "muted" },
+  ],
+  cta: { label: "Go Back Home", href: "/" },
+};
+
 export type SkillIcon = "code" | "gear" | "bars" | "cloud" | "server";
 
 export const skills: { icon: SkillIcon; title: string[]; lines: string[] }[] = [

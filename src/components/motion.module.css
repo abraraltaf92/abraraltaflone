@@ -36,3 +36,15 @@
     transition: none;
   }
 }
+
+/* A line break written into a heading's text. It applies from tablet width up; on phones
+   the heading wraps naturally, since a set break there leaves very short lines. */
+.setBreak {
+  display: none;
+}
+
+@media (min-width: 810px) {
+  .setBreak {
+    display: inline;
+  }
+}

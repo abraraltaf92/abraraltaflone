@@ -1,0 +1,57 @@
+/* The message sits a touch lower than a normal page starts, with a tall clear band
+   before the footer. */
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  max-width: 1440px;
+  margin-top: 5px;
+  margin-bottom: 197px;
+}
+
+.heading {
+  max-width: 1090px;
+  font-family: var(--manrope);
+  font-size: 64px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+}
+
+.ink {
+  color: var(--ink);
+}
+.muted {
+  color: var(--muted);
+}
+
+/* a slightly slimmer pill than the site's other buttons */
+.button {
+  gap: 10px;
+  padding: 16px 20px;
+}
+
+/* laptops: the heading scales with the window, as on the home page */
+@media (min-width: 1200px) and (max-width: 1439.98px) {
+  .heading {
+    font-size: calc(4.1667vw + 4px); /* 54 → 64 */
+  }
+}
+
+/* phone */
+@media (max-width: 809.98px) {
+  .notFound {
+    margin-top: 61px;
+    margin-bottom: 261px;
+  }
+  .heading {
+    font-size: min(48px, 12.31vw);
+  }
+  .action {
+    width: 100%;
+    max-width: 480px;
+  }
+}
