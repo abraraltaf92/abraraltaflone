@@ -1,0 +1,349 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 1440px;
+  overflow: clip;
+  scroll-margin-top: 110px;
+}
+
+.listWrap {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.row[data-expandable] .main {
+  cursor: pointer;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+}
+
+.company {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: var(--manrope);
+  font-size: 24px;
+  line-height: 33.6px;
+  font-weight: 300;
+}
+
+.companyName {
+  font-size: 40px;
+  line-height: 56px;
+  font-weight: 500;
+}
+
+.learnMore {
+  font-weight: 300;
+}
+
+.meta {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.role {
+  font-family: var(--manrope);
+  font-size: 40px;
+  line-height: 56px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.period {
+  font-family: var(--inter);
+  font-size: 16px;
+  line-height: 19.2px;
+  font-weight: 400;
+  text-align: right;
+}
+
+.arrow {
+  display: block;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.4s cubic-bezier(0.3, 1.2, 0.5, 1);
+}
+
+.toggle {
+  flex: none;
+  /* a 44px hit area that grows up, down and to the left, so the arrow itself stays put
+     and nothing sticks out past the right edge of the section */
+  margin: -10px 0 -10px -20px;
+  padding: 10px 0 10px 20px;
+}
+
+/* open: the arrow turns to point down */
+.row[data-open] .arrow {
+  transform: rotate(135deg);
+}
+
+/* The space under each title line. Closed, it is just the gap above the divider;
+   open, it grows to fit the description. */
+.panel {
+  --closed: 18px;
+  display: grid;
+  grid-template-rows: 0fr;
+  min-height: var(--closed);
+  transition: grid-template-rows 0.45s cubic-bezier(0.35, 0, 0, 1);
+}
+
+.row[data-open] .panel {
+  grid-template-rows: 1fr;
+}
+
+.panelInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.description {
+  max-width: 980px;
+  padding: 10px 0 24px;
+  font-family: var(--manrope);
+  font-size: 24px;
+  line-height: 33.6px;
+  font-weight: 300;
+  color: #787878;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.row[data-open] .description {
+  opacity: 1;
+  transition-delay: 0.1s;
+}
+
+/* rows without a description keep the same closed spacing */
+.row:not([data-expandable]) {
+  padding-bottom: 18px;
+}
+
+/* about teaser */
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 1440px;
+}
+
+.aboutHeading {
+  font-family: var(--manrope);
+  font-size: 48px;
+  line-height: 57.6px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+  color: var(--muted);
+}
+
+.ink {
+  color: var(--ink);
+}
+.muted {
+  color: var(--muted);
+}
+
+/* 960 and up: company and job title side by side on one line, with a slightly wider
+   right-hand column so the longest job title fits */
+@media (min-width: 960px) {
+  .company {
+    flex-grow: 0.82;
+  }
+  .meta {
+    flex-grow: 1.18;
+  }
+  .period {
+    white-space: nowrap;
+  }
+}
+
+/* laptop (1200–1439): the desktop rows with type scaled to the window (1200 → 1440) */
+@media (min-width: 1200px) and (max-width: 1439.98px) {
+  .company {
+    font-size: calc(2vw - 4.8px); /* 19.2 → 24 */
+    line-height: 1.4;
+  }
+  .companyName,
+  .role {
+    font-size: calc(3.3333vw - 8px); /* 32 → 40 */
+    line-height: 1.4;
+  }
+  .description {
+    font-size: calc(1.6667vw); /* 20 → 24 */
+    line-height: 1.4;
+  }
+}
+
+/* tablet and phone: compact, evenly spaced rows. A closed row is just its text and equal
+   padding above and below; opening it adds the description under the same padding. */
+@media (max-width: 1199.98px) {
+  .list {
+    gap: 0;
+  }
+  .row,
+  .row:not([data-expandable]) {
+    padding: 0;
+  }
+  .main {
+    min-height: 0;
+    padding: 20px 0;
+  }
+  .panel {
+    --closed: 0px;
+  }
+  .description {
+    padding: 0 0 24px;
+    font-size: 20px;
+    line-height: 28px;
+  }
+  /* the "[Learn more]" link gets a taller hit area without moving the text; it sits above
+     the neighbouring lines so they do not cover its edges */
+  .company a {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    margin: -10px 0;
+    padding: 10px 0;
+  }
+}
+
+/* wide tablet (960–1199): still one line per job. The type keeps shrinking along the same
+   line as on a laptop (32px at 1200), so every company and title fits its column. */
+@media (min-width: 960px) and (max-width: 1199.98px) {
+  .main,
+  .meta {
+    gap: 16px;
+  }
+  .company {
+    font-size: max(13px, calc(3vw - 16.8px)); /* "[Learn more]": 13 → 19.2 */
+    line-height: 1.3;
+  }
+  .companyName,
+  .role {
+    font-size: calc(5vw - 28px); /* 20 → 32 */
+    line-height: 1.3;
+  }
+  .period {
+    font-size: 14px;
+    line-height: 16.8px;
+  }
+}
+
+/* below 960: the job title moves under the company name; dates and arrow stay on the right */
+@media (max-width: 959.98px) {
+  .main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 4px 16px;
+    padding: 18px 0;
+  }
+  /* the right-hand group dissolves so its three parts can be placed on the grid */
+  .meta {
+    display: contents;
+  }
+  .company {
+    grid-area: 1 / 1;
+    font-size: clamp(13px, 1vw + 9.5px, 16px); /* "[Learn more]" */
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+  .companyName {
+    font-size: clamp(18px, 2.2vw + 11px, 30px); /* 18 at 320, 20 from about 400 */
+    line-height: 1.35;
+  }
+  .role {
+    grid-area: 2 / 1;
+    font-size: clamp(16px, 1.1vw + 11.5px, 22px);
+    line-height: 1.4;
+  }
+  .period {
+    grid-area: 1 / 2 / span 2;
+    white-space: nowrap;
+  }
+  .meta > .toggle,
+  .meta > .arrow {
+    grid-area: 1 / 3 / span 2;
+  }
+}
+
+/* phone */
+@media (max-width: 809.98px) {
+  .section,
+  .about {
+    gap: 32px;
+  }
+  .description {
+    padding-bottom: 20px;
+    font-size: 16px;
+    line-height: 22.4px;
+  }
+  .period {
+    font-size: 14px;
+    line-height: 16.8px;
+  }
+  .aboutHeading {
+    font-size: 32px;
+    line-height: 38.4px;
+    letter-spacing: -0.32px;
+  }
+}
+
+/* narrow phone: three short lines per job (company, title, dates) beside the arrow */
+@media (max-width: 599.98px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 12px;
+    padding: 18px 0;
+  }
+  .period {
+    grid-area: 3 / 1;
+    margin-top: 2px;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: left;
+  }
+  .meta > .toggle,
+  .meta > .arrow {
+    grid-area: 1 / 2 / span 3;
+  }
+  .aboutAction {
+    width: 100%;
+  }
+}
+
+/* wide phone (600–809): the button keeps its natural width */
+@media (min-width: 600px) and (max-width: 809.98px) {
+  .aboutAction > a {
+    display: inline-flex;
+    width: auto;
+  }
+}

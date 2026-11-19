@@ -1,0 +1,16 @@
+/* Aibyte Hub's settings for the shared case-study components (the variables are described
+   in src/components/casestudy/CaseStudyFrame.module.css). The page spacing is the default. */
+.tuning {
+  --cs-section-gap: 24px;
+  --cs-explore-weight: 500;
+  --cs-explore-hover: #171717;
+  --cs-explore-fade: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* tablet and desktop: the Explore button brings the "Projects" heading to rest 210px below
+   the top of the window (on a phone it uses the frame's own distance) */
+@media (min-width: 810px) {
+  .tuning {
+    --cs-anchor-offset: 210px;
+  }
+}

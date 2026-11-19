@@ -1,0 +1,38 @@
+/* Styles for LineReveal (see motion.tsx). */
+
+/* The screen-reader copy of the sentence; kept out of selections so copied text is not doubled. */
+.plain {
+  user-select: none;
+}
+
+/* A word is one unbreakable box on its line, so a line never ends in the middle of a word.
+   Only a word wider than the whole text column (a very long word on a very narrow phone)
+   is allowed to wrap inside its own box, as a last resort, so that nothing overflows. */
+.word {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.char {
+  display: inline-block;
+  opacity: 0.001;
+  transform: translateX(50px);
+}
+
+/* `--line` (0 for the first line) is set from the measured layout just before this plays. */
+.lines[data-shown] .char {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s cubic-bezier(0, 0.46, 0.56, 1) calc(var(--line, 0) * 0.2s),
+    transform 0.5s cubic-bezier(0, 0.46, 0.56, 1) calc(var(--line, 0) * 0.2s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lines .char,
+  .lines[data-shown] .char {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

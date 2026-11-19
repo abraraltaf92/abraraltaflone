@@ -1,0 +1,230 @@
+.wrap {
+  position: fixed;
+  top: 16px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.bar {
+  position: relative;
+  width: 89%;
+  max-width: 1440px;
+  border-radius: 238px;
+  background: rgba(252, 252, 252, 0.78);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  overflow: clip;
+  pointer-events: auto;
+  will-change: transform;
+}
+
+.bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid #e6e6e6;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 11px 0 14px;
+}
+
+.logo {
+  /* padding only makes the link a taller target; the row keeps its height */
+  padding: 7px 0;
+  font-family: var(--roboto);
+  font-size: 24px;
+  line-height: 28.8px;
+  font-weight: 500;
+  letter-spacing: -0.48px;
+  white-space: nowrap;
+}
+
+.links {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+/* The bold copy in ::after reserves the hover width, so links never shift. */
+.link {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--inter);
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 300;
+  white-space: nowrap;
+}
+
+.link span {
+  position: absolute;
+  inset: 0;
+  text-align: center;
+  transition: font-weight 0.2s ease;
+}
+
+.link::after {
+  content: attr(data-text);
+  font-weight: 300;
+  visibility: hidden;
+}
+
+/* an invisible margin around each link so it is a 44px-tall target */
+.link::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+}
+
+@media (hover: hover) {
+  .link:hover span {
+    font-weight: 600;
+  }
+}
+
+.cta {
+  display: flex;
+}
+
+.burger {
+  display: none;
+}
+
+.drawer {
+  display: none;
+}
+
+/* tablet and laptop: the bar spans the content column (80px gutters). The odd number makes
+   it meet the desktop width, 89% of the window, exactly at 1440. */
+@media (min-width: 810px) and (max-width: 1439.98px) {
+  .bar {
+    width: calc(100% - 158.4px);
+  }
+}
+
+/* narrow tablet: the links close up a little so the bar is not crowded */
+@media (min-width: 810px) and (max-width: 959.98px) {
+  .links {
+    gap: 28px;
+  }
+}
+
+/* phone */
+@media (max-width: 809.98px) {
+  .bar {
+    width: calc(100% - 28px);
+    border-radius: 40px;
+    transition: border-radius 0.4s cubic-bezier(0.3, 1.2, 0.5, 1);
+  }
+
+  .row {
+    height: 77px;
+    padding: 0 16px 0 22px;
+  }
+
+  .links,
+  .cta {
+    display: none;
+  }
+
+  /* a 44px button; the negative margin keeps the three lines where a 28px one had them */
+  .burger {
+    position: relative;
+    display: block;
+    width: 44px;
+    height: 44px;
+    margin-right: -8px;
+  }
+
+  .burger span {
+    position: absolute;
+    right: 12px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--ink);
+    transition:
+      transform 0.4s cubic-bezier(0.3, 1.2, 0.5, 1),
+      opacity 0.2s ease,
+      width 0.3s ease;
+  }
+  .burger span:nth-child(1) {
+    top: 14px;
+    width: 20px;
+  }
+  .burger span:nth-child(2) {
+    top: 21px;
+    width: 17px;
+  }
+  .burger span:nth-child(3) {
+    top: 28px;
+    width: 20px;
+  }
+
+  .bar[data-open] .burger span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .bar[data-open] .burger span:nth-child(2) {
+    opacity: 0;
+  }
+  .bar[data-open] .burger span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* The menu starts 12px up inside the bar row (empty space under the logo) and pads its
+     links down by the same amount, so the first link gets its full 44px target. */
+  .drawer {
+    display: grid;
+    grid-template-rows: 0fr;
+    margin-top: -12px;
+    padding: 0 16px 0 22px;
+    transition: grid-template-rows 0.4s cubic-bezier(0.3, 1.1, 0.5, 1);
+  }
+
+  .drawerInner {
+    min-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .bar[data-open] {
+    background: #fff;
+  }
+
+  .bar[data-open] .drawer {
+    grid-template-rows: 1fr;
+  }
+
+  .bar[data-open] .drawerInner {
+    opacity: 1;
+  }
+
+  .drawerLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 24px;
+    padding: 12px 0 24px;
+  }
+
+  .drawerCta {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 30px;
+  }
+}

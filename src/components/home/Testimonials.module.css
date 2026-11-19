@@ -1,0 +1,83 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 1440px;
+  padding-bottom: 24px;
+}
+
+.viewport {
+  width: 100%;
+  border-radius: 10px;
+  overflow: clip;
+}
+
+.track {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  will-change: transform;
+}
+
+.card {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 327px;
+  height: 357px;
+  margin-right: 10px;
+  padding: 16px 8px 8px;
+  border-radius: 10px;
+  background: rgba(186, 186, 186, 0.08);
+}
+
+.quote {
+  font-family: var(--manrope);
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  color: #525252;
+}
+
+.person {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  font-family: var(--roboto);
+  font-size: 16px;
+  line-height: 19.2px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.role {
+  font-family: var(--roboto);
+  font-size: 14px;
+  line-height: 16.8px;
+  font-weight: 400;
+  letter-spacing: 0.14px;
+  color: #5e5e5e;
+}
+
+@media (max-width: 809.98px) {
+  .section {
+    gap: 32px;
+    padding-bottom: 32px;
+  }
+  /* On the narrowest phones a card is a little slimmer than the strip, so a whole one can
+     be read at once; it grows taller instead if the longest quote needs it. */
+  .card {
+    width: min(327px, calc(100vw - 64px));
+    height: auto;
+    min-height: 357px;
+    gap: 16px;
+  }
+}

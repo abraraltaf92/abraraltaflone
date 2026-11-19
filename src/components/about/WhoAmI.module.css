@@ -1,0 +1,90 @@
+/* Screen sizes: desktop >= 1200px, tablet 810px – 1199.98px, phone <= 809.98px.
+   The text and the photo sit side by side from 1000px up and stack below that. */
+
+.section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1440px;
+  /* fills one screen, and grows if the text needs more */
+  min-height: 100vh;
+  padding: 81px 16px 205px;
+  background: var(--paper);
+  overflow: clip;
+}
+
+/* Between 1000px and 1440px the two columns and the space between them shrink with the
+   window; every clamp() below reaches its largest value at 1440px. */
+.text {
+  display: flex;
+  flex: 0 1 674px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(72px, 8.2vw, 118px);
+  min-width: 0;
+  padding-right: clamp(40px, 5.14vw, 74px);
+}
+
+.body {
+  width: 100%;
+  font-family: var(--manrope);
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 500;
+  color: #9ba1a5;
+}
+
+.photo {
+  position: relative;
+  flex: none;
+  width: min(546px, 37.92vw);
+  aspect-ratio: 546 / 431;
+  border-radius: 20px;
+  background: var(--white);
+  overflow: clip;
+  will-change: transform;
+}
+
+/* A tall photo, cropped by the card around it: a little wider than the card, and placed so
+   the head and the hands stay in view whatever shape the card takes. */
+.photo img {
+  position: absolute;
+  top: 0;
+  left: -3.1136%;
+  width: 105.2339%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 55.8877%;
+}
+
+/* small tablet and phone: the photo goes under the text */
+@media (max-width: 999.98px) {
+  .section {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 56px;
+    min-height: 0;
+    padding: 92px 16px;
+  }
+  .text {
+    flex: none;
+    gap: 25px;
+    padding-right: 0;
+  }
+  /* as wide as the text; on a phone it is taller than it is wide rather than a thin strip */
+  .photo {
+    width: 100%;
+    min-height: 420px;
+  }
+}
+
+/* phone */
+@media (max-width: 809.98px) {
+  .section {
+    gap: 40px;
+  }
+}

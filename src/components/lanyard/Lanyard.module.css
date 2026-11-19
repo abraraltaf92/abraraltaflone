@@ -1,0 +1,56 @@
+/* The 3D canvas is much larger than the card so the card has room to swing.
+   It never takes pointer events itself (see LanyardScene). */
+
+/* desktop: beside the intro. The canvas reaches above the page so the strap comes down
+   past the nav bar, low enough that one full name on the strap shows beneath it. */
+.lanyard {
+  position: absolute;
+  top: -382px;
+  right: -345px;
+  z-index: 2;
+  width: 1235px;
+  height: 1275px;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* laptop (1200–1439): the same scene scaled with the window. The canvas keeps its
+   proportions, so strap and card shrink together. `top` keeps one full name on the strap
+   between the nav bar and the clip; `right` lets the card sit a little nearer the edge so
+   the heading keeps its room. All four values meet the desktop ones at 1440. */
+@media (min-width: 1200px) and (max-width: 1439.98px) {
+  .lanyard {
+    top: calc(-104px - 19.3056vw);
+    right: calc(-162.5px - 12.6736vw);
+    width: 85.7639vw;
+    height: 88.5417vw;
+  }
+}
+
+/* tablet and phone: under the intro, centred on the page. The canvas starts at the bottom
+   of the intro and the strap fades in over its first few pixels. */
+@media (max-width: 1199.98px) {
+  .lanyard {
+    top: calc(100% - 8px);
+    right: auto;
+    z-index: 0;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 8px, #000 44px);
+    mask-image: linear-gradient(to bottom, transparent 8px, #000 44px);
+  }
+}
+
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .lanyard {
+    left: calc(50% - 424.5px);
+    width: 849px;
+    height: 1862px;
+  }
+}
+
+@media (max-width: 809.98px) {
+  .lanyard {
+    left: calc(50% - 240px);
+    width: 480px;
+    height: 1731px;
+  }
+}

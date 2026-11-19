@@ -1,0 +1,259 @@
+/* Screen sizes: desktop >= 1200px, tablet 810px – 1199.98px, phone <= 809.98px.
+   The book card keeps its two columns down to 1000px and stacks below that.
+   Between 1000px and 1440px the gaps and the cover shrink with the window; every clamp()
+   below reaches its largest value at 1440px. */
+
+.section {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1440px;
+  min-height: 977px;
+  padding: 36px 16px;
+  background: var(--paper);
+}
+
+.inner {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  min-width: 0;
+  max-width: 1240px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: clamp(64px, 8.125vw, 117px);
+  width: 100%;
+}
+
+.intro {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: var(--manrope);
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 500;
+  color: #9ba1a5;
+}
+
+/* book card */
+.bookSlot {
+  width: 100%;
+}
+
+.book {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(64px, 11.46vw, 165px);
+  width: 100%;
+  padding: 64px 0;
+  border-radius: 24px;
+  background: #e8e6e6;
+  overflow: clip;
+  will-change: transform;
+}
+
+.bookText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.bookHead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.bookHeading {
+  font-family: var(--manrope);
+  font-size: 26px;
+  line-height: 39px;
+  font-weight: 600;
+  color: #050505;
+}
+
+.bookTitle {
+  font-family: var(--font-roboto-italic), var(--roboto);
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 500;
+  font-style: italic;
+  color: rgba(5, 5, 5, 0.84);
+}
+
+.bookBody {
+  width: 383px;
+  font-family: var(--manrope);
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 500;
+  color: #171717;
+}
+
+/* "Interview" button */
+.interview {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  height: 41px;
+  padding: 0 15px;
+  border-radius: 16px;
+  background: rgba(51, 51, 51, 0.4);
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+/* hairline drawn inside the button so it never changes the size */
+.interview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(5, 5, 5, 0.81);
+  border-radius: inherit;
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.interviewIcon {
+  position: relative;
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+.camera {
+  position: absolute;
+  top: 5px;
+  left: 2px;
+  width: 18px;
+  height: 12px;
+  overflow: visible;
+  fill: transparent;
+  stroke: var(--white);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: fill 0.3s ease;
+}
+
+.interviewLabel {
+  font-family: var(--inter);
+  font-size: 16px;
+  line-height: 19.2px;
+  font-weight: 400;
+  color: var(--white);
+}
+
+/* book cover */
+.coverSlot {
+  flex: none;
+  width: clamp(231px, 23.125vw, 333px);
+  aspect-ratio: 0.712567;
+  will-change: transform;
+}
+
+.cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.3, 1.25, 0.5, 1);
+}
+
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (hover: hover) {
+  .interview:hover {
+    background: rgba(51, 51, 51, 0.5);
+  }
+  .interview:hover::after {
+    border-color: rgba(71, 71, 71, 0.71);
+  }
+  .interview:hover .camera {
+    fill: var(--white);
+  }
+  .cover:hover {
+    transform: rotate(2deg) scale(1.1);
+  }
+}
+
+/* tablet and phone: the title goes above the introduction */
+@media (max-width: 1199.98px) {
+  .section {
+    min-height: 0;
+  }
+  .header {
+    flex-direction: column;
+    gap: 25px;
+  }
+  .intro {
+    flex: none;
+    width: 100%;
+  }
+  /* a full-height target for a finger */
+  .interview {
+    height: 44px;
+  }
+}
+
+/* small tablet and phone: the cover goes under the text */
+@media (max-width: 999.98px) {
+  .book {
+    flex-direction: column;
+    gap: 48px;
+    padding: 64px 40px;
+  }
+  .bookText,
+  .bookHead,
+  .bookHeading,
+  .bookTitle,
+  .bookBody {
+    width: 100%;
+  }
+  .coverSlot {
+    width: min(333px, 100%);
+  }
+}
+
+/* phone */
+@media (max-width: 809.98px) {
+  .section {
+    padding: 36px 0;
+  }
+  /* the card runs to the page margin; the text above it lines up with the other sections */
+  .header {
+    padding: 0 16px;
+  }
+  .book {
+    gap: 40px;
+    padding: 48px 24px;
+  }
+  .coverSlot {
+    width: min(280px, 100%);
+  }
+}
+
+/* With reduced motion the card is simply shown at full size. */
+@media (prefers-reduced-motion: reduce) {
+  .book {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

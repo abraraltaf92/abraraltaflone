@@ -1,0 +1,231 @@
+/* Screen sizes: desktop >= 1200px, tablet 810px – 1199.98px, phone <= 809.98px. */
+
+/* The finished arrangement (the photos around the headline) is drawn for a 1440 x 864
+   window. `--u` is one pixel of that drawing: 1px on a window that size or bigger, and
+   less on a narrower or shorter one, so the photos, the distances between them and the
+   headline all shrink together and the arrangement always fits the screen. On a shorter
+   window it shrinks a little faster than the window does (the 160px), which keeps the
+   top photos from sliding further under the nav than they do in the drawing. */
+.intro {
+  --stage: 100vh;
+  --u: min(1px, 100vw / 1440, (var(--stage) - 160px) / 704);
+  /* sideways the photos go as far as the width allows, also on a short window */
+  --ux: min(1px, 100vw / 1440);
+  /* the pile of photos, and one photo once the pile has spread */
+  --pile: calc(445 * var(--u));
+  --photo: calc(0.3 * var(--pile));
+  /* how far below the middle of the screen the arrangement is centred */
+  --drop: 0px;
+  /* the small title: under the nav, and closer to it on a short window */
+  --title-top: clamp(104px, 21vh, 178px);
+  /* How far the pile starts below its pinned place. Less on a short window, so the whole
+     pile is on screen when the page opens. */
+  --lead: clamp(0px, var(--stage) / 2 - var(--pile) / 2 - 12px, 194px);
+
+  position: relative;
+  width: 100%;
+  padding-top: var(--lead);
+}
+
+.titleSlot {
+  position: absolute;
+  top: var(--title-top);
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.title {
+  font-family: var(--manrope);
+  font-size: 48px;
+  line-height: 52.8px;
+  font-weight: 600;
+  letter-spacing: -0.48px;
+  white-space: pre;
+}
+
+.ink {
+  color: var(--ink);
+}
+.muted {
+  color: var(--muted);
+}
+
+/* Stays on screen while the track below scrolls past. */
+.pinned {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--stage);
+}
+
+.headingWrap {
+  width: 100%;
+  /* sits a little below the centre of the screen */
+  margin-top: calc(36 * var(--u));
+  opacity: var(--reveal, 0);
+  transform: scale(calc(0.9 + 0.1 * var(--reveal, 0)));
+  will-change: transform, opacity;
+}
+
+.heading {
+  font-family: var(--manrope);
+  font-size: calc(64 * var(--u));
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+/* one colour per line */
+.heading span {
+  display: block;
+}
+
+.pile {
+  position: absolute;
+  z-index: 1;
+  top: calc(50% + var(--drop) - var(--pile) / 2);
+  left: calc(50% - var(--pile) / 2);
+  width: var(--pile);
+  height: var(--pile);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+/* --spread runs 0 -> 1: each photo moves to its own spot (--to-x, --to-y) and shrinks to 30%.
+   Intro.tsx gives every photo its place in the drawing as --x and --y. */
+.photo {
+  --to-x: calc(var(--x) * var(--ux));
+  --to-y: calc(var(--y) * var(--u));
+
+  position: absolute;
+  inset: 0;
+  border-radius: calc(80 * var(--u));
+  overflow: clip;
+  transform: translate(calc(var(--spread, 0) * var(--to-x)), calc(var(--spread, 0) * var(--to-y)))
+    scale(calc(1 - 0.7 * var(--spread, 0)));
+  will-change: transform;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+.track {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 1339px;
+}
+
+/* the headline fades in over the last quarter of the track */
+.trackEnd {
+  height: 25%;
+}
+
+/* Tablet and phone: the arrangement keeps clear of the nav (--nav) and of the bottom edge
+   (--foot), and is centred in the space between them. */
+@media (max-width: 1199.98px) {
+  .intro {
+    --nav: 88px;
+    --foot: 16px;
+    --room: calc(var(--stage) - var(--nav) - var(--foot));
+    --drop: calc((var(--nav) - var(--foot)) / 2);
+    /* 802 = the height of the drawing, from the top of the highest photo to the bottom of the lowest */
+    --u: min(1px, 100vw / 1440, var(--room) / 802);
+    /* The pile opens `--title-gap` below the title where the screen is tall enough for that
+       (on a very tall one it stays in the middle), and always fully on screen. */
+    --title-height: 52.8px;
+    --title-gap: 140px;
+    --pinned-top: calc(var(--drop) + var(--stage) / 2 - var(--pile) / 2);
+    --lead: clamp(
+      0px,
+      min(
+        var(--stage) - var(--pile) - 12px - var(--pinned-top),
+        var(--title-top) + var(--title-height) + var(--title-gap) - var(--pinned-top)
+      ),
+      158px
+    );
+  }
+  .headingWrap {
+    margin-top: calc(2 * var(--drop));
+  }
+}
+
+/* Tablet and phone held upright: no room for photos beside the headline, so the drawing
+   changes. The headline takes four lines, with a row of four photos above it and another
+   below; in each row the middle two sit further from the headline than the outer two.
+   This drawing is 640 wide (the widest line of the headline plus a margin) and 848 tall. */
+@media (max-width: 1199.98px) and (orientation: portrait) {
+  .intro {
+    --u: min(1px, 100vw / 640, var(--room) / 848);
+    /* from one photo to the next along a row: spread evenly across the screen */
+    --step: calc((100vw + var(--photo)) / (var(--columns) + 1));
+    /* The rows move apart to use a tall screen: up to a quarter further than drawn, and never
+       past the top or bottom. `--far-y` is the largest --y, set by Intro.tsx. */
+    --uy: min(1.25 * var(--u), (var(--room) / 2 - var(--photo) / 2) / var(--far-y));
+  }
+  /* narrow enough that each colour wraps onto two lines */
+  .heading {
+    max-width: 9.375em;
+    margin: 0 auto;
+  }
+  /* Intro.tsx numbers the columns from the centre outwards as --column: -1.5, -0.5, 0.5, 1.5 */
+  .photo {
+    --to-x: calc(var(--column) * var(--step));
+    --to-y: calc(var(--y) * var(--uy));
+  }
+}
+
+/* phone */
+@media (max-width: 809.98px) {
+  .intro {
+    --stage: 94.9026vh;
+    --title-top: clamp(104px, 21vh, 165px);
+    /* two lines */
+    --title-height: 79.2px;
+    --title-gap: 96px;
+  }
+  .titleReveal {
+    width: 65%;
+  }
+  .title {
+    font-size: 36px;
+    line-height: 39.6px;
+    letter-spacing: -0.36px;
+    text-align: center;
+    white-space: normal;
+  }
+}
+
+/* With reduced motion the finished arrangement is shown from the start. */
+@media (prefers-reduced-motion: reduce) {
+  .pinned {
+    --spread: 1 !important;
+    --reveal: 1 !important;
+  }
+}
+
+/* On tablet and phone its top photos would then open on top of the small title: start it under the title. */
+@media (prefers-reduced-motion: reduce) and (max-width: 1199.98px) {
+  .intro {
+    --lead: calc(var(--title-top) + var(--title-height));
+  }
+}

@@ -1,0 +1,65 @@
+/* The --cs-explore-* variables are described in CaseStudyFrame.module.css. */
+.explore {
+  position: fixed;
+  right: var(--gutter);
+  bottom: 24px;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 120px;
+  height: 49px;
+  border-radius: 117px;
+  background: #141414;
+  color: var(--white);
+  font-family: var(--manrope);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: var(--cs-explore-weight, 400);
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+/* The icon is drawn pointing up; turned over it points at the content below. */
+.arrow {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  transform: rotate(180deg);
+}
+
+@media (hover: hover) {
+  .explore:hover {
+    background: var(--cs-explore-hover, #2b2b2b);
+  }
+}
+
+/* The button bows out once the section it leads to is on screen (see `data-arrived` in
+   ExploreButton.tsx), so it never sits on that section's content or, at the end of the
+   page, on the footer. */
+.explore {
+  transition:
+    background-color var(--cs-explore-fade, 0.3s ease),
+    opacity 0.3s ease,
+    visibility 0s;
+}
+
+.explore[data-arrived] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    background-color var(--cs-explore-fade, 0.3s ease),
+    opacity 0.3s ease,
+    visibility 0s 0.3s;
+}
+
+/* phone: the next section is one swipe away, and a floating button here would sit on top of
+   the intro's own buttons, so it is not shown */
+@media (max-width: 809.98px) {
+  .explore {
+    display: none;
+  }
+}

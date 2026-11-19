@@ -1,0 +1,165 @@
+%-------------------------------------------------------------------------------
+% Abrar Altaf Lone - resume
+%
+% Build (either works):
+%   tectonic resume/AbrarResume.tex --outdir public/files
+%   pdflatex -output-directory=public/files resume/AbrarResume.tex
+% or paste this file into Overleaf and download the PDF as AbrarResume.pdf.
+% The site's Resume button shows public/files/AbrarResume.pdf.
+%-------------------------------------------------------------------------------
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{0pt}
+\raggedbottom
+\raggedright
+
+% Section headings: small caps with a rule underneath
+\renewcommand{\section}[1]{%
+  \vspace{6pt}%
+  {\large\scshape #1}\par
+  \vspace{-8pt}\rule{\textwidth}{0.4pt}\par
+  \vspace{-1pt}%
+}
+
+% One entry heading: bold left / right on the first line, italic left / right on the second
+\newcommand{\entry}[4]{%
+  \vspace{3pt}%
+  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & #2 \\[-1pt]
+    \textit{\small #3} & \textit{\small #4} \\
+  \end{tabular*}\par\vspace{-2pt}%
+}
+
+% A one-line entry: bold name, plain detail, date on the right
+\newcommand{\lineentry}[3]{%
+  \vspace{1pt}%
+  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+    \textbf{#1}, #2 & #3 \\
+  \end{tabular*}\par
+}
+
+% A project heading: bold name, tools in italics, date on the right
+\newcommand{\project}[3]{%
+  \vspace{2pt}%
+  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+    \small\textbf{#1} $|$ \textit{#2} & \small #3 \\
+  \end{tabular*}\par\vspace{-2pt}%
+}
+
+% Compact bullet list
+\newenvironment{bullets}{%
+  \begin{list}{\textbullet}{%
+    \setlength{\leftmargin}{0.16in}\setlength{\labelwidth}{0.1in}\setlength{\labelsep}{0.06in}%
+    \setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{1pt}\setlength{\partopsep}{0pt}}%
+  \small
+}{%
+  \end{list}%
+}
+
+\begin{document}
+
+%----------------------------------- HEADER ------------------------------------
+\begin{center}
+  {\Huge\scshape Abrar Altaf Lone} {\small (He/Him)} \\ \vspace{3pt}
+  \footnotesize New York, NY $|$ +1 332-285-5373 $|$
+  \href{mailto:abraraltaf92@gmail.com}{abraraltaf92@gmail.com} $|$
+  \href{https://www.linkedin.com/in/abraraltaf92}{linkedin.com/in/abraraltaf92} $|$
+  \href{https://github.com/abraraltaf92}{github.com/abraraltaf92} $|$
+  \href{https://abraraltaflone.com}{abraraltaflone.com}
+\end{center}
+\vspace{-10pt}
+
+%---------------------------------- EDUCATION ----------------------------------
+\section{Education}
+
+\lineentry{Pace University, Seidenberg School of CSIS}{M.S. in Data Science, New York, NY}{May 2026}
+\lineentry{National Institute of Technology Srinagar}{B.Tech in Electronics and Communication Engineering, India}{Jul 2022}
+
+%--------------------------------- EXPERIENCE ----------------------------------
+\section{Experience}
+
+\entry{Workada}{Remote}
+      {AI Research Analyst}{Nov 2026 -- Present}
+\begin{bullets}
+  \item Design and run evaluations of AI coding models: build realistic software tasks, grade model output against ground truth, and report where and why models fail.
+\end{bullets}
+
+\entry{Mercor}{Remote}
+      {Software Engineer, AI Training (Contract)}{Sep 2026 -- Present}
+\begin{bullets}
+  \item Write coding tasks, reference solutions and tests used to train and evaluate AI models, and review other engineers' submissions.
+\end{bullets}
+
+\entry{Affordable Charter LLC}{Paterson, NJ}
+      {Data Engineering Intern}{Sep 2025 -- Dec 2025}
+\begin{bullets}
+  \item Designed end-to-end data pipelines in Python and SQL that join marketing, web and operations data, improving reporting accuracy by 30\%; dashboards and automated tracking on top cut reporting effort by 60\%.
+  \item Ran technical SEO work (canonicalization, indexing, crawl optimization) that grew organic traffic by 40--55\% and qualified inbound leads by 25\%.
+\end{bullets}
+
+\entry{Biblo}{Remote}
+      {Founder}{Oct 2024 -- Present}
+\begin{bullets}
+  \item Founded a social platform connecting readers with independent bookstores; drew 50+ waitlist sign-ups at an in-person startup showcase at Pace University, and 25+ user interviews shaped the product.
+  \item Building the mobile app in React Native (Expo) on a Supabase backend: profiles, a photo feed, book reviews, blogs, 24-hour statuses and notifications.
+\end{bullets}
+
+\entry{Aibyte Hub Pvt.\ Ltd.}{Remote}
+      {Founder}{2021 -- Present}
+\begin{bullets}
+  \item Founded a digital solutions company that has delivered 20+ custom web, app and IT projects, including websites for four pharmacies; SEO-focused landing pages raised their organic traffic by 120\% and cut bounce rates by 25\%.
+  \item Built Kharchi Parchi, a GST billing platform for small shops in India: a React Native app and a Next.js web app on one shared TypeScript billing engine, with Supabase and Bluetooth thermal-printer receipts.
+\end{bullets}
+
+\entry{Samsung R\&D Institute India}{Bangalore, India}
+      {Software Engineer}{Jan 2022 -- Dec 2023}
+\begin{bullets}
+  \item Developed features for Samsung's network software, working on the 4G Layer-3 and RRC call stack and eNodeB development, and contributed to early 6G work.
+  \item Moved to computer vision work on camera systems and gesture recognition for Samsung AI features, including ``Circle to Search''; member of the Galaxy Z Fold 5 test team.
+\end{bullets}
+
+%---------------------------------- PROJECTS -----------------------------------
+\section{Projects}
+
+\project{Robust Deepfake Detection}{PyTorch, FastAPI, Docker, AWS}{2026}
+\begin{bullets}
+  \item Capstone in a team of four: an ensemble of five detectors (ResNet-18, EfficientNet-B4, ViT-B/16, R3D-18, R3D-18 with RAFT optical flow) covering spatial, global-consistency and motion artifacts.
+  \item Trained on FaceForensics++ (test AUC of 0.999 or higher for every model) and evaluated zero-shot on 6,528 Celeb-DF v2 videos (ensemble AUC 0.885), a 26.9\% smaller generalization gap than the ResNet-18 baseline; served through a containerized FastAPI backend.
+\end{bullets}
+
+\project{Mechanify}{Swift, macOS}{2026}
+\begin{bullets}
+  \item Open-source menu-bar app that plays mechanical-keyboard sounds for every key press, with low-latency playback and stereo placement by key position; it never reads or stores what is typed.
+\end{bullets}
+
+\project{AMBUR}{Machine Learning}{2020}
+\begin{bullets}
+  \item Apple disease detection and cost prediction system with 98.03\% detection accuracy, sold to the Horticulture Department of Jammu \& Kashmir.
+\end{bullets}
+
+%----------------------------------- SKILLS ------------------------------------
+\section{Technical Skills}
+{\small
+\begin{tabular*}{\textwidth}{@{}p{1.15in}@{}p{\dimexpr\textwidth-1.15in\relax}@{}}
+  \textbf{Languages}      & Python, SQL, C++, TypeScript, JavaScript, Swift, Dart, PHP \\
+  \textbf{Data \& ML}     & PyTorch, TensorFlow, Keras, scikit-learn, Pandas, NumPy, PySpark, Matplotlib, Seaborn, Plotly \\
+  \textbf{Web \& Mobile}  & Next.js, React Native (Expo), Flutter, FastAPI, Laravel, Supabase \\
+  \textbf{Data \& Cloud}  & PostgreSQL, MySQL, MongoDB, InfluxDB, AWS, Docker, Git \\
+\end{tabular*}\par}
+
+%--------------------------------- PUBLICATION ---------------------------------
+\section{Publication}
+\begin{bullets}
+  \item \textbf{Author, \textit{The Day I Met a Revolution}} (Oct 2023), a book on how artificial intelligence is changing the way people think, build and work.
+\end{bullets}
+
+\end{document}

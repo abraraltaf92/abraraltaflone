@@ -1,0 +1,139 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 13px 20px;
+  border-radius: 25px;
+  background: #000;
+  color: #fff;
+  font-family: var(--manrope);
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.32px;
+  white-space: nowrap;
+  position: relative;
+}
+
+/* the pill is 42px tall; this makes it a slightly taller target without changing its look */
+.button::before {
+  content: "";
+  position: absolute;
+  inset: -4px 0;
+}
+
+/* full-screen viewer */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgb(20, 20, 20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade 0.2s ease;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.stage {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  padding: 54px 70px;
+}
+
+.stage canvas {
+  display: block;
+  margin: auto;
+  background: #fff;
+  flex: none;
+}
+
+.control {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+/* the buttons are 40px; an invisible 4px margin makes each a comfortable touch target */
+.control::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+}
+
+.control svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* A control at its limit (first page, smallest zoom…) is dimmed. It is marked with
+   aria-disabled rather than disabled so it still receives the pointer: the site cursor
+   keeps tracking over it and a click on it never falls through and closes the viewer. */
+.control[aria-disabled="true"] {
+  opacity: 0.35;
+}
+
+.counter {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  font-family: var(--inter);
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+.close {
+  top: 10px;
+  right: 10px;
+}
+.zoomOut {
+  top: 60px;
+  right: 10px;
+}
+.zoomIn {
+  top: 110px;
+  right: 10px;
+}
+.download {
+  top: 160px;
+  right: 10px;
+}
+.prev {
+  top: calc(50% - 20px);
+  left: 10px;
+}
+.next {
+  top: calc(50% - 20px);
+  right: 10px;
+}
+
+.status {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--inter);
+  font-size: 16px;
+}
+
+@media (max-width: 809.98px) {
+  .stage {
+    padding: 60px 8px;
+  }
+}

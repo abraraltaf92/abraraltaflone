@@ -1,0 +1,253 @@
+/* Screen sizes: desktop >= 1200px, tablet 810px – 1199.98px, phone <= 809.98px.
+   Between 1200px and 1440px the columns close up with the window; every clamp() below
+   reaches its largest value at 1440px. */
+
+.section {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1440px;
+  padding: 100px 16px;
+  border-radius: 24px 24px 0 0;
+  background: var(--white);
+  overflow: clip;
+}
+
+.inner {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  min-width: 0;
+  max-width: 1240px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: clamp(64px, 8.125vw, 117px);
+  width: 100%;
+}
+
+.intro {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: var(--manrope);
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 500;
+  color: #9ba1a5;
+}
+
+.listSlot {
+  width: 100%;
+  will-change: transform;
+}
+
+/* On desktop the rows sit in the middle of a fixed-height block, so opening one never moves the footer. */
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 81px;
+  height: 373px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-family: var(--roboto);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.degree {
+  width: clamp(296px, 24.7vw, 355.6px);
+}
+
+.school {
+  font-family: var(--font-roboto-light), var(--roboto);
+  font-weight: 300;
+}
+
+/* each of these holds two lines */
+.degree span,
+.school span {
+  display: block;
+}
+
+.meta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(64px, 6.95vw, 100px);
+}
+
+.period {
+  color: #757575;
+}
+
+.arrow {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 35px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* points up-right; turns to point right on hover and while its row is open */
+.arrowIcon {
+  width: 16px;
+  height: 12px;
+  transform: rotate(-45deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1.25, 0.5, 1);
+}
+
+.row[aria-expanded="true"] .arrowIcon {
+  transform: none;
+}
+
+@media (hover: hover) {
+  .arrow:hover .arrowIcon {
+    transform: none;
+  }
+}
+
+.description {
+  /* a little narrower than the rows */
+  width: calc(100% - 19.6px);
+  margin: 0 auto;
+  font-family: var(--roboto);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #0f0f0f;
+}
+
+.word {
+  display: inline-block;
+  white-space: pre;
+}
+
+/* Desktop: offsets carried over from the original, so every open state of the fixed-height
+   block lines up with it exactly. */
+@media (min-width: 1200px) {
+  /* the first description is set slightly lighter */
+  .card:first-child .description p {
+    opacity: 0.67;
+  }
+  .list[data-open="1"] .card:last-child {
+    position: relative;
+    top: 2px;
+  }
+  .list[data-open="2"] .card:first-child {
+    margin-bottom: -13px;
+  }
+  .list[data-open="2"] .card:last-child {
+    padding: 2px 0 33px;
+  }
+}
+
+/* Tablet and phone: each row has the degree above the school on the left, and the dates
+   above the arrow on the right. The block is as tall as its rows, so an open description
+   pushes the rest of the page down. */
+@media (max-width: 1199.98px) {
+  .section {
+    overflow: visible;
+  }
+  .header {
+    flex-direction: column;
+    gap: 25px;
+  }
+  .intro {
+    flex: none;
+    width: 100%;
+  }
+  .list {
+    gap: 56px;
+    height: auto;
+  }
+  .card {
+    gap: 24px;
+  }
+  .row {
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .degree {
+    width: auto;
+  }
+  .meta {
+    flex: none;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .description {
+    width: 100%;
+  }
+}
+
+/* phone: the names wrap where the screen makes them, and the dates take two lines */
+@media (max-width: 809.98px) {
+  .section {
+    padding: 72px 16px;
+  }
+  .list {
+    gap: 48px;
+  }
+  .row {
+    gap: 16px;
+    white-space: normal;
+  }
+  .main {
+    flex: 1 0 0;
+    gap: 8px;
+    min-width: 0;
+  }
+  .degree,
+  .school {
+    text-wrap: balance;
+  }
+  .degree span,
+  .school span {
+    display: inline;
+  }
+  .period {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .period span {
+    display: block;
+  }
+}

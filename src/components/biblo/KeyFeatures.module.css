@@ -1,0 +1,127 @@
+/* The measures the layout is built from. Sizes written with --cs-u follow the window on
+   desktop (see CaseStudyFrame.module.css).
+
+   The mascot's picture is 2:3 and reaches the edge of the window, one page gutter past the
+   list; --kf-clear is the room the list leaves her on its right. On desktop only the first
+   description is long enough to come near her, and it passes her head, where the left 34%
+   of the picture is empty: the list stops 12px short of that. */
+.features {
+  --kf-heading: calc(48 * var(--cs-u));
+  --kf-text: calc(20 * var(--cs-u));
+  --kf-mascot: calc(496 * var(--cs-u));
+  --kf-clear: calc(var(--kf-mascot) * 0.66 - var(--gutter) + 12px);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(40 * var(--cs-u));
+  width: 100%;
+  padding-right: var(--kf-clear);
+  counter-reset: feature;
+}
+
+/* Clipped so the heading and description sliding in from the right stay inside the row. */
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--cs-u));
+  width: 100%;
+  overflow: clip;
+  counter-increment: feature;
+}
+
+.headingSlot {
+  width: 100%;
+}
+
+/* The number hangs in a two-digit-wide margin to the left of the heading. */
+.heading {
+  position: relative;
+  padding-left: 2ch;
+  font-family: var(--manrope);
+  font-size: var(--kf-heading);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--muted);
+  overflow-wrap: break-word;
+}
+
+.heading::before {
+  content: counter(feature) ".";
+  position: absolute;
+  left: 0;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.ink {
+  color: var(--ink);
+}
+
+/* The description lines up under the heading's words, past the number. */
+.descriptionSlot {
+  width: 100%;
+  padding-left: calc(var(--kf-heading) * 1.375);
+  overflow: clip;
+}
+
+.description {
+  font-family: var(--manrope);
+  font-size: var(--kf-text);
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--ink);
+  overflow-wrap: break-word;
+}
+
+/* The mascot stands 48px above the footer (the section itself ends 100px above it). */
+.character {
+  position: absolute;
+  right: calc(-1 * var(--gutter));
+  bottom: calc(48px - 100px);
+  width: var(--kf-mascot);
+  aspect-ratio: 2 / 3;
+}
+
+.character img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* tablet and phone: lines wrap beside her at any height, so the list stops 24px short of
+   the widest part of her, the hem of her skirt (the left 28% of the picture is empty) */
+@media (max-width: 1199.98px) {
+  .features {
+    --kf-clear: calc(var(--kf-mascot) * 0.72 - var(--gutter) + 24px);
+  }
+}
+
+/* tablet: the same arrangement, carried on from the desktop sizes at 1200px */
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .features {
+    --kf-heading: max(34px, 3.3333vw);
+    --kf-text: 17px;
+    --kf-mascot: max(300px, 34.444vw);
+  }
+}
+
+/* phone: type eases down a little on the narrowest screens (full size from 390px up) */
+@media (max-width: 809.98px) {
+  .features {
+    --kf-heading: clamp(26px, 8.205vw, 32px);
+    --kf-text: clamp(17px, 5.128vw, 20px);
+    --kf-mascot: clamp(261px, 38vw, 300px);
+  }
+}
+
+/* narrow phone: no room beside the list, so it takes the full width and the mascot stands
+   on her own below it */
+@media (max-width: 599.98px) {
+  .features {
+    --kf-clear: 0px;
+    padding-bottom: calc(var(--kf-mascot) * 1.5 - 52px + 24px);
+  }
+}

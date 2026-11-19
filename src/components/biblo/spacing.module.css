@@ -1,0 +1,19 @@
+/* Biblo's distances for the shared case-study frame (see CaseStudyFrame.module.css).
+   On a phone the page uses the frame's own distances. */
+
+/* tablet and desktop */
+@media (min-width: 810px) {
+  .spacing {
+    --cs-top: 150px;
+    --cs-gap: calc(260 * var(--cs-u));
+    --cs-anchor-offset: 150px;
+  }
+}
+
+/* tablet */
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .spacing {
+    --cs-gap: 226px;
+    --cs-anchor-offset: 116px;
+  }
+}

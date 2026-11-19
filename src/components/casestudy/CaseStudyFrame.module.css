@@ -1,0 +1,49 @@
+/* The shared page frame (`.page` in globals.css) pads the content by --page-top above and
+   --page-bottom below. Case studies use their own distances, so the difference is made up
+   with margins here.
+
+   A page tunes the shared case-study components by passing a class that sets any of these
+   variables (inside media queries where a breakpoint differs):
+     --cs-top             top of the window to the first section      (default 200px; on a
+                          phone, the shared page frame's own distance)
+     --cs-gap             space between sections                      (default 300px; 160px
+                          on a phone)
+     --cs-bottom          last section to the footer                  (default 100px)
+     --cs-anchor-offset   space kept above a section when a link
+                          scrolls to it                               (default 200px; on a
+                          phone, where the first section sits on load)
+     --cs-section-gap     space between a section's label and content (default 40px)
+     --cs-explore-weight  font weight of the Explore button           (default 400)
+     --cs-explore-hover   fill of the Explore button under the pointer (default #2b2b2b)
+     --cs-explore-fade    duration and easing of that colour change   (default 0.3s ease)
+
+   The frame also provides --cs-u, one pixel of the 1440px-wide desktop design. A size
+   written as calc(N * var(--cs-u)) is N px, except on desktop windows narrower than 1440px,
+   where it shrinks in step with the window so the composition keeps its proportions. */
+.frame {
+  --cs-u: 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--cs-gap, 300px);
+  width: 100%;
+  max-width: 1280px;
+  margin: calc(var(--cs-top, 200px) - var(--page-top)) 0 calc(var(--cs-bottom, 100px) - var(--page-bottom));
+}
+
+/* desktop */
+@media (min-width: 1200px) {
+  .frame {
+    --cs-u: min(100vw / 1440, 1px);
+    gap: var(--cs-gap, calc(300 * var(--cs-u)));
+  }
+}
+
+/* phone: the first section starts where every other page's content starts, and sections
+   sit closer together */
+@media (max-width: 809.98px) {
+  .frame {
+    gap: var(--cs-gap, 160px);
+    margin-top: calc(var(--cs-top, var(--page-top)) - var(--page-top));
+  }
+}

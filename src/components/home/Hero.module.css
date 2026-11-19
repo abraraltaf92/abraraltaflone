@@ -1,0 +1,285 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 120px;
+  width: 100%;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+  max-width: 1440px;
+  padding-right: 500px;
+}
+
+.eyebrow {
+  font-family: var(--manrope);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+.heading {
+  font-family: var(--manrope);
+  font-size: 64px;
+  line-height: 76.8px;
+  font-weight: 600;
+  letter-spacing: -0.64px;
+  color: var(--muted);
+}
+
+.ink {
+  color: var(--ink);
+}
+.muted {
+  color: var(--muted);
+}
+.bold {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+/* skills */
+.skills {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 1440px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.cardSlot {
+  flex: none;
+  width: 253px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 210px;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--card);
+  overflow: clip;
+  will-change: transform;
+}
+
+.icon {
+  flex: none;
+  color: #666;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 205px;
+}
+
+.cardTitle {
+  font-family: var(--manrope);
+  font-size: 16px;
+  line-height: 19.2px;
+  font-weight: 500;
+  letter-spacing: 0.32px;
+  text-align: center;
+}
+
+.cardBody {
+  font-family: var(--inter);
+  font-size: 14px;
+  line-height: 19.6px;
+  font-weight: 400;
+  letter-spacing: 0.14px;
+  color: #424242;
+  text-align: center;
+}
+
+.cardTitle span,
+.cardBody span {
+  display: block;
+}
+
+/* laptop (1200–1439): the desktop composition, scaled to the window. Every calc() here is
+   a straight line through the desktop value at 1440 (given in the comments as 1200 → 1440),
+   so the layout changes smoothly all the way down. */
+@media (min-width: 1200px) and (max-width: 1439.98px) {
+  /* room for the hanging card, which shrinks with the window (see Lanyard.module.css) */
+  .hero {
+    padding-right: calc(50vw - 220px); /* 380 → 500 */
+  }
+  .heading {
+    font-size: calc(4.1667vw + 4px); /* 54 → 64 */
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* Five cards share the row. As on desktop it runs 40.5px past the text column each side. */
+  .cards {
+    width: calc(100% + 81px);
+    margin-left: -40.5px;
+    gap: calc(3.3333vw - 24px); /* 16 → 24 */
+  }
+  .cardSlot {
+    display: flex;
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+  }
+  /* cards grow together if the text needs another line */
+  .card {
+    flex: 1;
+    height: auto;
+    min-height: 210px;
+    padding: 24px calc(5vw - 48px); /* 12 → 24 at the sides */
+  }
+  .cardText {
+    width: 100%;
+  }
+  .cardTitle {
+    font-size: calc(0.4167vw + 10px); /* 15 → 16 */
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+  .cardBody {
+    font-size: calc(0.4167vw + 8px); /* 13 → 14 */
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* tablet and phone: the card hangs in the gap between the intro and the skills */
+@media (max-width: 1199.98px) {
+  .hero {
+    padding-right: 0;
+  }
+  /* if the three buttons ever run out of room, the last drops to a second row */
+  .actions {
+    flex-wrap: wrap;
+  }
+  .cardText {
+    width: 100%;
+  }
+}
+
+/* The gaps below are the height of the hanging card plus clearance: it slides down up to
+   32px as the page scrolls (Lanyard.tsx) and still stops short of "Core Skills". */
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .group {
+    gap: 640px;
+  }
+}
+
+/* phone */
+@media (max-width: 809.98px) {
+  .group {
+    gap: 600px;
+  }
+  .eyebrow {
+    font-size: 16px;
+    line-height: 22.4px;
+  }
+  /* 48px from 390 up; smaller below so the heading does not run to a dozen lines */
+  .heading {
+    font-size: min(48px, 12.31vw);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .skills {
+    gap: 32px;
+  }
+}
+
+/* narrow phone: "Get In Touch" runs the full width with the two profile buttons sharing
+   the row beneath it; one column of roomier skill cards */
+@media (max-width: 599.98px) {
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .action:first-child {
+    grid-column: 1 / -1;
+  }
+  /* slimmer side padding so a half-width button holds its label on the narrowest phones */
+  .action:not(:first-child) > a {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+  .cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  /* three quarters of the column, but never so narrow that the titles wrap */
+  .cardSlot {
+    width: max(75%, min(100%, 260px));
+  }
+  .card {
+    gap: 24px;
+    height: auto;
+    min-height: 259px;
+  }
+  .cardText {
+    gap: 10px;
+  }
+}
+
+/* wide phone (600–809): the buttons sit side by side at their natural width */
+@media (min-width: 600px) and (max-width: 809.98px) {
+  .action > a {
+    display: inline-flex;
+    width: auto;
+  }
+}
+
+/* 600–1199: skill cards two to a row, with the fifth centred under them */
+@media (min-width: 600px) and (max-width: 1199.98px) {
+  .cards {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  /* the spare half pixel keeps rounding from pushing a card onto the next row */
+  .cardSlot {
+    display: flex;
+    width: calc((100% - 16.5px) / 2);
+  }
+  .card {
+    flex: 1;
+    height: auto;
+    min-height: 210px;
+  }
+}
+
+/* 900–1199: three to a row, then two centred */
+@media (min-width: 900px) and (max-width: 1199.98px) {
+  .cardSlot {
+    width: calc((100% - 32.5px) / 3);
+  }
+}

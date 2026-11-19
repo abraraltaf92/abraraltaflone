@@ -1,0 +1,161 @@
+/* Sizes written with --cs-u follow the window on desktop (see CaseStudyFrame.module.css). */
+.intro {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.text {
+  display: flex;
+  flex: 1 0 0;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(48 * var(--cs-u));
+}
+
+/* Clipped so the lines sliding in from the right never spill over the image. */
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(24 * var(--cs-u));
+  width: 100%;
+  padding-right: calc(16 * var(--cs-u));
+  overflow: clip;
+}
+
+.body {
+  width: 100%;
+  font-family: var(--manrope);
+  font-size: calc(20 * var(--cs-u));
+  line-height: calc(30 * var(--cs-u));
+  font-weight: 500;
+  color: #9ba1a5;
+  overflow-wrap: break-word;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* The two buttons are a touch larger than the site's standard pill. */
+.actions .visit {
+  gap: 10px;
+  padding: 17px 27px;
+}
+
+.actions .back {
+  width: 151px;
+  height: 59px;
+  padding: 0;
+}
+
+/* The "snap" way of reacting to the pointer (see the `hover` prop). The colours it ends on
+   are the standard pill's; only how it gets there differs. */
+.snap .visit,
+.snap .back {
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.snap .visit::after,
+.snap .back::after {
+  transition: none;
+}
+
+.snap .arrow {
+  /* the point the arrow shape itself is drawn around, so the turn below keeps it in place */
+  transform-origin: 11.811px 12.354px;
+  transition: none;
+}
+
+@media (hover: hover) {
+  /* the outline fades in with the fill and is dropped at once when the pointer leaves */
+  .snap .visit:hover::after,
+  .snap .back:hover::after {
+    transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* the arrow jumps from up-right to pointing right, and fades while it is itself under the pointer */
+  .snap .visit:hover .arrow {
+    transform: rotate(46deg);
+  }
+  .snap .arrow:hover {
+    color: rgba(0, 0, 0, 0.26);
+  }
+}
+
+.figure {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+  aspect-ratio: 1.5641;
+  will-change: transform;
+}
+
+.figure img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* wide tablet (one held on its side): still side by side, with the paragraph a size down
+   so it sits comfortably next to the image, as it does on the narrowest desktop */
+@media (min-width: 1080px) and (max-width: 1199.98px) {
+  .text {
+    gap: 40px;
+  }
+  .body {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+}
+
+/* tablet and phone: the image drops below the text, which no longer needs room beside it */
+@media (max-width: 1079.98px) {
+  .intro {
+    flex-direction: column;
+  }
+  .text {
+    flex: none;
+    width: 100%;
+    padding-bottom: 48px;
+  }
+  .copy {
+    padding-right: 0;
+  }
+  .figure {
+    flex: none;
+    width: 100%;
+  }
+}
+
+/* phone: the paragraph eases down a little on the narrowest screens (20px from 390px up) */
+@media (max-width: 809.98px) {
+  .body {
+    font-size: clamp(17px, 5.128vw, 20px);
+    line-height: 1.5;
+  }
+}
+
+/* narrow phone: full-width buttons, one above the other */
+@media (max-width: 479.98px) {
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .action,
+  .actions .back {
+    width: 100%;
+  }
+}

@@ -1,0 +1,88 @@
+.pill {
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border-radius: 64px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* 1px hairline drawn inside the pill so it never changes the size */
+.pill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.label {
+  font-family: var(--manrope);
+  font-size: 18px;
+  line-height: 25.2px;
+  font-weight: 500;
+}
+
+.primary {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.secondary {
+  background: var(--chip);
+  color: var(--ink);
+}
+
+.iconSmall,
+.iconLarge {
+  display: block;
+  flex: none;
+  transition: transform 0.4s cubic-bezier(0.3, 1.25, 0.5, 1);
+}
+
+.iconSmall {
+  width: 16px;
+  height: 16px;
+}
+
+.iconLarge {
+  width: 24px;
+  height: 24px;
+}
+
+.iconSmall svg,
+.iconLarge svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (hover: hover) {
+  .pill:hover {
+    background: var(--white);
+    color: var(--ink);
+  }
+  .pill:hover::after {
+    border-color: var(--ink);
+  }
+  .pill:hover .iconSmall,
+  .pill:hover .iconLarge {
+    transform: rotate(45deg);
+  }
+}
+
+@media (max-width: 809.98px) {
+  .pill {
+    display: flex;
+    width: 100%;
+  }
+}

@@ -1,0 +1,170 @@
+/* Breakpoints:
+   desktop  >= 1200px   (designed at 1440; between 1200 and 1439 it scales down fluidly)
+   tablet   810px – 1199.98px
+   phone    <= 809.98px
+   Components add their own in-between steps where the content needs them. */
+
+:root {
+  --ink: #000;
+  --paper: #fcfcfc;
+  --muted: #808080;
+  --chip: #e3e3e3;
+  --card: #ebebeb;
+  --tile: #f2f0f0;
+  --line: #c2c2c2;
+  --white: #fff;
+
+  --manrope: var(--font-manrope), "Manrope", sans-serif;
+  --inter: var(--font-inter), "Inter", sans-serif;
+  --roboto: var(--font-roboto), "Roboto", sans-serif;
+
+  --gutter: 80px;
+  /* Page frame padding: room for the floating nav above the content, and the space left
+     above the footer. Pages that need other distances can do the sums from these. */
+  --page-top: 184px;
+  --page-bottom: 64px;
+  --ease-reveal: cubic-bezier(0.35, 0, 0, 1);
+}
+
+@media (max-width: 809.98px) {
+  :root {
+    --gutter: 16px;
+    --page-top: 128px;
+    --page-bottom: 0px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--manrope);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure {
+  margin: 0;
+  padding: 0;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* The site draws its own cursor on devices with a mouse. */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Page frame: room for the floating nav, then stacked sections. */
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 120px;
+  width: 100%;
+  padding: var(--page-top) var(--gutter) var(--page-bottom);
+  overflow-x: clip;
+}
+
+@media (max-width: 809.98px) {
+  .page {
+    gap: 122px;
+  }
+}
+
+.section {
+  width: 100%;
+  max-width: 1440px;
+}
+
+.section-label {
+  font-family: var(--manrope);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,23 @@
+.section {
+  position: relative;
+  width: 100%;
+  scroll-margin-top: var(--cs-anchor-offset, 200px);
+}
+
+/* Clipped so text sliding in from the right never spills past the column. */
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--cs-section-gap, 40px);
+  width: 100%;
+  overflow: clip;
+}
+
+/* phone: a link brings the section to rest where the first section sits on load */
+@media (max-width: 809.98px) {
+  .section {
+    scroll-margin-top: var(--cs-anchor-offset, var(--page-top));
+  }
+}

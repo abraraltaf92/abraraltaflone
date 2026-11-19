@@ -1,0 +1,279 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  max-width: 1440px;
+  overflow: clip;
+  scroll-margin-top: 110px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px 32px;
+  width: 100%;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  will-change: transform;
+}
+
+.tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 620 / 451;
+  border-radius: 24px;
+  background: var(--tile);
+  overflow: clip;
+  text-align: left;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blur {
+  position: absolute;
+  inset: 0;
+  -webkit-backdrop-filter: blur(23px);
+  backdrop-filter: blur(23px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.description {
+  position: absolute;
+  z-index: 1;
+  left: 16px;
+  right: 16px;
+  bottom: 75px;
+  font-family: var(--manrope);
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  opacity: 0;
+  transform: translateX(-616px);
+  transition:
+    transform 0.4s cubic-bezier(0.3, 1.2, 0.5, 1),
+    opacity 0.3s ease;
+}
+
+.view {
+  position: absolute;
+  z-index: 1;
+  left: 16px;
+  bottom: 16px;
+  width: 41px;
+  height: 47px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.54);
+  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
+  overflow: clip;
+  transition:
+    width 0.4s cubic-bezier(0.3, 1.2, 0.5, 1),
+    border-radius 0.4s ease,
+    background-color 0.3s ease;
+}
+
+.viewArrow {
+  position: absolute;
+  left: 12px;
+  top: 13px;
+  width: 19px;
+  height: 22px;
+  color: var(--ink);
+  transform: rotate(224deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1.2, 0.5, 1);
+}
+
+.viewText {
+  position: absolute;
+  left: 41px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--manrope);
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--ink);
+  white-space: pre;
+}
+
+.title {
+  min-height: 56px;
+  font-family: var(--manrope);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+@media (hover: hover) {
+  .tile:hover .blur {
+    opacity: 1;
+  }
+  .tile:hover .description {
+    opacity: 1;
+    transform: none;
+  }
+  .tile:hover .view {
+    width: 91px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .tile:hover .viewArrow {
+    transform: rotate(270deg);
+  }
+}
+
+/* Larger preview of a project, over a near-black backdrop. The picture is scaled to fit
+   inside the padding at any window size; the top padding keeps it clear of the close button. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 64px 64px;
+  background: rgba(0, 0, 0, 0.9);
+  animation: fade 0.2s ease;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.lightboxImage {
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+  background: var(--tile);
+}
+
+/* pinned to the corner of the screen, so it is always in reach whatever the picture's size */
+.lightboxClose {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* a white focus ring, since the page's black one would vanish against the backdrop */
+.lightboxClose:focus-visible {
+  outline-color: #fff;
+  border-radius: 50%;
+}
+
+@media (max-width: 1199.98px) {
+  .lightbox {
+    padding: 72px 40px 40px;
+  }
+}
+
+/* phone: the picture runs the full width of the screen, centred between equal margins */
+@media (max-width: 599.98px) {
+  .lightbox {
+    padding: 72px 0;
+  }
+  .lightboxImage {
+    border-radius: 0;
+  }
+}
+
+/* laptop (1200–1439): the tiles are smaller, so the hover text steps down with them */
+@media (min-width: 1200px) and (max-width: 1439.98px) {
+  .description {
+    font-size: calc(0.8333vw + 3px); /* 13 → 15 */
+    line-height: 1.2;
+  }
+}
+
+/* tablet and phone: square tiles, two across. With nine projects the first one runs the
+   full width, so no row is left half empty. */
+@media (max-width: 1199.98px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px 24px;
+  }
+  .tile {
+    aspect-ratio: 1 / 1;
+    max-height: 400px;
+  }
+  .item:first-child {
+    grid-column: 1 / -1;
+  }
+  /* as tall as the tiles in the rows below it */
+  .item:first-child .tile {
+    aspect-ratio: auto;
+    height: min(400px, calc((100vw - 2 * var(--gutter) - 24px) / 2));
+  }
+  .title {
+    min-height: 0;
+  }
+  .description {
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
+
+/* wide tablet (1040–1199): room for three across again, so every tile is equal */
+@media (min-width: 1040px) and (max-width: 1199.98px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .item:first-child {
+    grid-column: auto;
+  }
+  .item:first-child .tile {
+    aspect-ratio: 1 / 1;
+    height: auto;
+  }
+}
+
+/* phone */
+@media (max-width: 809.98px) {
+  .section {
+    gap: 32px;
+  }
+  .grid {
+    gap: 32px 16px;
+  }
+  .item:first-child .tile {
+    height: min(400px, calc((100vw - 2 * var(--gutter) - 16px) / 2));
+  }
+}
+
+/* narrow phone: one column */
+@media (max-width: 599.98px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .item:first-child .tile {
+    aspect-ratio: 1 / 1;
+    height: auto;
+  }
+}
