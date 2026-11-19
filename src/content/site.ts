@@ -8,8 +8,6 @@ export const site = {
     "A personal portfolio showcasing work in software and data engineering, focused on building scalable systems, thoughtful architecture, and reliable, real-world solutions.",
   url: "https://abraraltaflone.com",
   email: "abraraltaf92@gmail.com",
-  phone: "+1 (332) 285-5373",
-  phoneHref: "tel:+13322855373",
   resume: { file: "/files/AbrarResume.pdf", downloadName: "AbrarResume.pdf" },
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/abraraltaf92" },
