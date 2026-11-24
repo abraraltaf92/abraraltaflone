@@ -45,3 +45,7 @@ next-env.d.ts
 /resume/*.log
 /resume/*.out
 /resume/*.pdf
+
+# showreel leftovers (the finished videos live in reel/out)
+/reel/out/*.png
+/reel/music.wav

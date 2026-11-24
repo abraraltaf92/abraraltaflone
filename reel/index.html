@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Abrar Altaf Lone | Showreel</title>
+<!--
+  An 18-second showreel. Every animation is a paused CSS animation; render.cjs moves them all
+  to one point in time per frame, so the output is the same on every run.
+  Open this file in a browser with ?play to watch it in real time.
+  Each scene sets --s (its start, in seconds); each moving part sets --d (its delay after that).
+-->
+<style>
+@font-face {
+  font-family: "Manrope";
+  src: url("fonts/Manrope.woff2") format("woff2");
+  font-weight: 200 800;
+}
+
+:root {
+  --ink: #000;
+  --paper: #fcfcfc;
+  --muted: #808080;
+  --chip: #e3e3e3;
+  --tile: #f2f0f0;
+  --ease: cubic-bezier(0.35, 0, 0, 1);
+  /* One unit of size. Everything is sized in these so both shapes share the same rules. */
+  --u: 1.22vw;
+}
+@media (orientation: portrait) {
+  :root { --u: 2.1vw; }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--paper); }
+body {
+  font-family: "Manrope", sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- scenes ---- */
+.scene {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: calc(4 * var(--u));
+  padding: calc(4.5 * var(--u)) calc(5.5 * var(--u));
+  background: var(--paper);
+  animation: wipe 0.7s var(--ease) calc(var(--s) * 1s) both;
+}
+.scene.first { animation: none; }
+.scene.dark { background: var(--ink); color: var(--paper); }
+.scene.solo { grid-template-columns: 1fr; }
+
+@media (orientation: portrait) {
+  .scene {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    align-content: center;
+    gap: calc(4 * var(--u));
+    padding: calc(6 * var(--u)) calc(4 * var(--u));
+  }
+}
+
+.text { display: flex; flex-direction: column; gap: calc(1.6 * var(--u)); min-width: 0; }
+
+.eyebrow {
+  font-size: calc(1.35 * var(--u));
+  font-weight: 500;
+  color: var(--muted);
+}
+h1 {
+  font-size: calc(5.4 * var(--u));
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+h2 {
+  font-size: calc(3.8 * var(--u));
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+h2 .soft, h1 .soft { color: var(--muted); }
+.lead span { display: inline-block; }
+.lead .sep { font-weight: inherit; }
+@media (orientation: portrait) {
+  .lead .sep { display: none; }
+  .close .lead span { display: block; }
+}
+.lead {
+  font-size: calc(1.7 * var(--u));
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--muted);
+  max-width: 28em;
+}
+
+.stats { display: flex; gap: calc(3.5 * var(--u)); margin-top: calc(1.2 * var(--u)); }
+.stat b {
+  display: block;
+  font-size: calc(4 * var(--u));
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.stat span {
+  display: block;
+  margin-top: calc(0.7 * var(--u));
+  font-size: calc(1.2 * var(--u));
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: calc(0.8 * var(--u)); margin-top: calc(1 * var(--u)); }
+.chip {
+  padding: calc(0.7 * var(--u)) calc(1.4 * var(--u));
+  border-radius: 999px;
+  background: var(--chip);
+  font-size: calc(1.25 * var(--u));
+  font-weight: 600;
+}
+.dark .chip { background: #222; color: var(--paper); }
+
+/* ---- pictures ---- */
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: calc(1.6 * var(--u));
+  background: var(--tile);
+  animation: reveal 0.9s var(--ease) calc((var(--s) + var(--d, 0.25)) * 1s) both;
+}
+.card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: settle 3.2s var(--ease) calc((var(--s) + var(--d, 0.25)) * 1s) both;
+}
+.card.square { aspect-ratio: 1; }
+.card.tile { aspect-ratio: 1000 / 726; }
+.card.wide { aspect-ratio: 16 / 9; }
+
+.quad { display: grid; grid-template-columns: 1fr 1fr; gap: calc(1.2 * var(--u)); }
+.quad .card { border-radius: calc(1.1 * var(--u)); aspect-ratio: 1242 / 904; }
+
+@media (orientation: portrait) {
+  .card.square { width: 78%; }
+}
+
+/* ---- closing scene ---- */
+.close { justify-items: center; text-align: center; }
+.close .text { align-items: center; }
+.close .url { font-size: calc(6 * var(--u)); }
+@media (orientation: portrait) {
+  .close .url { font-size: calc(3.7 * var(--u)); }
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(0.7 * var(--u));
+  margin-top: calc(1.4 * var(--u));
+  padding: calc(0.8 * var(--u)) calc(1.6 * var(--u));
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: calc(1.3 * var(--u));
+  font-weight: 600;
+}
+.pill i {
+  width: calc(0.7 * var(--u));
+  height: calc(0.7 * var(--u));
+  border-radius: 50%;
+  background: #3ddc84;
+}
+
+/* ---- progress line ---- */
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(0.3 * var(--u));
+  background: #fff;
+  mix-blend-mode: difference;
+  transform-origin: left;
+  animation: grow 18s linear both;
+}
+
+/* ---- motion ---- */
+.rise { animation: rise 0.8s var(--ease) calc((var(--s) + var(--d, 0.2)) * 1s) both; }
+
+@keyframes wipe {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(calc(2.4 * var(--u))); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes reveal {
+  from { clip-path: inset(0 0 100% 0 round calc(1.6 * var(--u))); }
+  to { clip-path: inset(0 0 0 0 round calc(1.6 * var(--u))); }
+}
+@keyframes settle {
+  from { transform: scale(1.18); }
+  to { transform: scale(1); }
+}
+@keyframes grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Held still until render.cjs (or ?play) moves time forward. */
+body:not(.play) *, body:not(.play) { animation-play-state: paused !important; }
+</style>
+</head>
+<body>
+
+<!-- 1. Open: 0.0 to 2.8 -->
+<section class="scene first" style="--s: 0">
+  <div class="text">
+    <p class="eyebrow rise" style="--d: 0.1">Software Engineer · Data Scientist · New York</p>
+    <h1 class="rise" style="--d: 0.25">Abrar<br>Altaf Lone</h1>
+    <p class="lead rise" style="--d: 0.45">I build clean systems for complex data and software challenges.</p>
+  </div>
+  <div class="card square" style="--d: 0.2"><img src="../public/images/about/hero-portrait.jpg" alt=""></div>
+</section>
+
+<!-- 2. Samsung: 2.8 to 5.8 -->
+<section class="scene dark solo" style="--s: 2.8">
+  <div class="text">
+    <p class="eyebrow rise" style="--d: 0.3">Samsung R&amp;D Institute India · Software Engineer · 2022 to 2023</p>
+    <h2 class="rise" style="--d: 0.45">4G network software, <span class="soft">then computer vision for Samsung AI features.</span></h2>
+    <div class="chips">
+      <span class="chip rise" style="--d: 0.7">Layer-3 and RRC call stack</span>
+      <span class="chip rise" style="--d: 0.8">Circle to Search</span>
+      <span class="chip rise" style="--d: 0.9">Galaxy Z Fold 5 test team</span>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Aibyte Hub: 5.8 to 8.8 -->
+<section class="scene" style="--s: 5.8">
+  <div class="text">
+    <p class="eyebrow rise" style="--d: 0.3">Aibyte Hub · Founder · 2021 to present</p>
+    <h2 class="rise" style="--d: 0.45">Websites, apps and IT systems <span class="soft">for small businesses.</span></h2>
+    <div class="stats">
+      <div class="stat rise" style="--d: 0.7"><b>20+</b><span>projects delivered</span></div>
+      <div class="stat rise" style="--d: 0.82"><b>+120%</b><span>organic traffic for pharmacy clients</span></div>
+    </div>
+  </div>
+  <div class="quad">
+    <div class="card" style="--d: 0.3"><img src="../public/images/aibytehub/crossroads-chemists.png" alt=""></div>
+    <div class="card" style="--d: 0.42"><img src="../public/images/aibytehub/harbor-pharmacy.png" alt=""></div>
+    <div class="card" style="--d: 0.54"><img src="../public/images/aibytehub/smile-pharmacy.png" alt=""></div>
+    <div class="card" style="--d: 0.66"><img src="../public/images/projects/kharchi-parchi.png" alt=""></div>
+  </div>
+</section>
+
+<!-- 4. Biblo: 8.8 to 11.6 -->
+<section class="scene" style="--s: 8.8">
+  <div class="text">
+    <p class="eyebrow rise" style="--d: 0.3">Biblo · Founder · 2024 to present</p>
+    <h2 class="rise" style="--d: 0.45">A social platform for readers <span class="soft">and independent bookstores.</span></h2>
+    <div class="stats">
+      <div class="stat rise" style="--d: 0.7"><b>50+</b><span>waitlist sign-ups</span></div>
+      <div class="stat rise" style="--d: 0.82"><b>25+</b><span>user interviews</span></div>
+    </div>
+  </div>
+  <div class="card wide" style="--d: 0.3"><img src="../public/images/projects/maya-preview.png" alt=""></div>
+</section>
+
+<!-- 5. Deepfake detection: 11.6 to 14.4 -->
+<section class="scene" style="--s: 11.6">
+  <div class="text">
+    <p class="eyebrow rise" style="--d: 0.3">M.S. capstone · PyTorch, FastAPI, Docker, AWS</p>
+    <h2 class="rise" style="--d: 0.45">Robust deepfake detection <span class="soft">with an ensemble of five models.</span></h2>
+    <div class="stats">
+      <div class="stat rise" style="--d: 0.7"><b>0.885</b><span>AUC on 6,528 unseen videos</span></div>
+      <div class="stat rise" style="--d: 0.82"><b>26.9%</b><span>smaller generalization gap</span></div>
+    </div>
+  </div>
+  <div class="card tile" style="--d: 0.3"><img src="../public/images/projects/deepfake-detection.png" alt=""></div>
+</section>
+
+<!-- 6. Now: 14.4 to 16.2 -->
+<section class="scene dark solo" style="--s: 14.4">
+  <div class="text">
+    <p class="eyebrow rise" style="--d: 0.3">Now · Workada and Mercor</p>
+    <h2 class="rise" style="--d: 0.42">Evaluating AI coding models.</h2>
+    <div class="chips">
+      <span class="chip rise" style="--d: 0.6">M.S. Data Science, Pace University, 2026</span>
+      <span class="chip rise" style="--d: 0.7">Author, The Day I Met a Revolution</span>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Close: 16.2 to 18.0 -->
+<section class="scene solo close" style="--s: 16.2">
+  <div class="text">
+    <p class="eyebrow rise" style="--d: 0.3">Abrar Altaf Lone</p>
+    <h1 class="url rise" style="--d: 0.4">abraraltaflone.com</h1>
+    <p class="lead rise" style="--d: 0.55"><span>linkedin.com/in/abraraltaf92</span><b class="sep"> · </b><span>github.com/abraraltaf92</span></p>
+    <span class="pill rise" style="--d: 0.7"><i></i>Available for work</span>
+  </div>
+</section>
+
+<div class="progress"></div>
+
+<script>
+  // render.cjs calls this once per frame with the time in seconds.
+  window.seek = (t) => {
+    for (const a of document.getAnimations()) a.currentTime = t * 1000;
+  };
+  if (new URLSearchParams(location.search).has("play")) document.body.classList.add("play");
+</script>
+</body>
+</html>
